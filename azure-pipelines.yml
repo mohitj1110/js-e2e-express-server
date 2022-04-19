@@ -15,7 +15,19 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'ado-sonarcloud-connection'
+    organization: 'mohit11100348'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'Mohit11100348_ado-sonarqube-integration'
+    cliProjectName: 'ado-sonarqube-integration'
+    cliSources: '.'
+
 - script: |
     npm install
     npm run build
   displayName: 'npm install and build'
+
+- task: SonarCloudAnalyze@1
