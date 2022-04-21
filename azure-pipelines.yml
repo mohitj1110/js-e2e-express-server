@@ -35,7 +35,7 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'docker-hub-service-connection'
-    repository: 'mohit1110'
+    repository: 'mohit1110/microservicedemo'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
 
