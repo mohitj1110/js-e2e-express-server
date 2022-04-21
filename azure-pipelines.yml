@@ -22,18 +22,6 @@ steps:
 #    npm install
 #  displayName: 'npm install'
 
-- task: Docker@1
-  displayName: 'Build the Docker image'
-  inputs:
-    containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: 'Docker Hub'
-    command: 'Build an image'
-    dockerFile: '**/Dockerfile'
-    imageName: '$(ImageName)'
-    includeLatestTag: true
-    useDefaultContext: false
-    buildContext: '.'
-
 - task: SonarCloudPrepare@1
   inputs:
     SonarCloud: 'ado-sonarcloud-connection'
@@ -44,8 +32,15 @@ steps:
     cliProjectName: 'ado-sonarqube-integration'
     cliSources: '.'
 
-- script: |
-    npm run build
-  displayName: 'npm build'
+- task: Docker@2
+  inputs:
+    containerRegistry: 'docker-hub-service-connection'
+    repository: 'mohit1110'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+
+#- script: |
+#    npm run build
+#  displayName: 'npm build'
 
 - task: SonarCloudAnalyze@1
